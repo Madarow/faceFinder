@@ -7,12 +7,32 @@ plugins cordova :
 plugins ionic :
   localStorage
 
-fonctionnalité :
+
+
+presentation en une phrase :
+  gere et compares des portrait
+
+
 que fait l'app :
+
   révolution dans la généalogie visuel, vous compare a vos proche et vous donne un score de ressemblance
-  
+  permet la creation et la gestion d'une bibliotheque de portrait.
+
+  parcourt utilisateur :
+
+
+
+  ----selection du portrait par default : choisie une photo de toi (ou pas ) !
+  -----créé ta bibliotheque de protrait en les ajoutant un a un ou avec une photo de groupe(5max)
+  -------puis compare le au portait de ta bibliotheque
+  -------ou bien ajout de nouveau portrait ou une photo de groupe
+  -------l'application s'occupe de tout !!
+  -------une fois les/le nouveau portrait enregistré tu peut les comparé a foisont
+
 par vue :
-  1) lors de l'initialisation de l'application créée une bibliotheque des images déja presentes dans le téléphone
+  *1) lors de l'initialisation de l'application créée une bibliotheque
+     des images déja presentes dans le téléphone(action load screen non visible)
+     ***
 
   2)
      vue 1)
