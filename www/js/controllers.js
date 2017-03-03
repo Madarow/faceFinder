@@ -1,13 +1,16 @@
 angular.module('starter.controllers', [])
 
+// $rootScope contain all cordova dependencies
+
 .controller('HomeCtrl', function($rootScope) {
-  console.log($rootScope);
-})
 
-.controller('GaleryCtrl', function() {
 
 })
 
-.controller('OptCtrl', function() {
+.controller('GaleryCtrl', function($rootScope) {
+
+})
+
+.controller('OptCtrl', function($rootScope) {
 
 })
