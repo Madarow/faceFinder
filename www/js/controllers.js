@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function() {
-
+.controller('HomeCtrl', function($rootScope) {
+  console.log($rootScope);
 })
 
 .controller('GaleryCtrl', function() {

@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.facePlus', 'starter.camera','starter.files'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -21,6 +21,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.hide();
     }
   });
+
+  // console.log(cordova.camera);
+  document.addEventListener("deviceready", onDeviceReady, false);
+
+  function onDeviceReady() {
+      $rootScope.camera = navigator.camera;
+  }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

@@ -20,13 +20,9 @@ que fait l'app :
 
   parcourt utilisateur :
 
-
-
-  ----selection du portrait par default : choisie une photo de toi (ou pas ) !
   -----créé ta bibliotheque de protrait en les ajoutant un a un ou avec une photo de groupe(5max)
-  -------puis compare le au portait de ta bibliotheque
-  -------ou bien ajout de nouveau portrait ou une photo de groupe
-  -------l'application s'occupe de tout !!
+  -------puis compare les portait de ta bibliotheque
+  -------ajout de nouveau portrait ou une photo de groupe
   -------une fois les/le nouveau portrait enregistré tu peut les comparé a foisont
 
 par vue :
