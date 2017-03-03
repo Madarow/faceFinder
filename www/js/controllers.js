@@ -1,13 +1,13 @@
 angular.module('starter.controllers', [])
 
-.controller('HomeCtrl', function($scope) {
+.controller('HomeCtrl', function() {
 
 })
 
-.controller('GaleryCtrl', function($scope) {
+.controller('GaleryCtrl', function() {
 
 })
 
-.controller('OptCtrl', function($scope) {
+.controller('OptCtrl', function() {
 
 })
