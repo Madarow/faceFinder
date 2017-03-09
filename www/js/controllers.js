@@ -4,7 +4,6 @@ angular.module('starter.controllers', [])
 
 .controller('HomeCtrl', function($rootScope) {
 
-
 })
 
 .controller('GaleryCtrl', function($rootScope) {
