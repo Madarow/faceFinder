@@ -1,7 +1,8 @@
 <ion-view view-title="Home">
   <ion-content class="padding">
     <p>home</p>
-    <img ng-src="test/{{mySelfie}}" alt="" />
-    <button type="button" name="button" ng-click="newPicture()">new picture</button>
+    <img ng-src="{{mySelfie.nativeURL}}" alt="" />
+    <button type="button" ng-click="newPicture()">new picture</button>
+    <button type="button" ng-if="mySelfie.nativeURL != ''" ng-click="sendToApi()">new picture</button>
   </ion-content>
 </ion-view>

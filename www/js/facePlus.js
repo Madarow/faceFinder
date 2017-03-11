@@ -9,8 +9,24 @@ angular.module('starter.facePlus', [])
   };
 
   return {
-    doDetect:function(url,opts){
-      $http.json(this.ENDPOINT+'detect/')
+    doDetect:function(opts){
+      $http.post(facePpAPI.ENDPOINT+'detect?api_key='+facePpAPI.key
+                                   +'&api_secret='+facePpAPI.secret
+                                   +'&image_url='+opts.image_url
+                                   +'&return_attributes='+opts.return_attributes
+                                 ).then((re)=>{
+                                   console.log(re);
+                                 })
+      // opts.api_secret = facePpAPI.secret;
+      // opts.api_key = facePpAPI.key;
+      // $http({ method:'POST',
+      //         url:this.ENDPOINT+'detect/',
+      //         header:{
+      //           'Content-type':opts
+      //           }
+      //       }).then((responce) => {
+      //           console.log(responce);
+      //         })
     }
   }
 
