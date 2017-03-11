@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.facePlus'])
 
-.run(function($ionicPlatform,$rootScope,camera) {
+.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -22,12 +22,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.facePlus'])
     }
   });
 
-  document.addEventListener("deviceready", onDeviceReady, false);
 
-  function onDeviceReady() {
-      $rootScope.camera = navigator.camera;
-      $rootScope.file = cordova.file
-    }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
