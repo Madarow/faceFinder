@@ -51,7 +51,6 @@ angular.module('starter.controllers', [])
     $scope.hide();
    });
 
-
 })
 
 .controller('GaleryCtrl', function($rootScope) {
