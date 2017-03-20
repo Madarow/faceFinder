@@ -43,7 +43,7 @@ angular.module('starter.facePlus', [])
         };
 
         getDataUri(opts.image_url, function(dataUri) {
-          url = facePpAPI.ENDPOINT + 'detect?api_secret=' + facePpAPI.secret + '&api_key=' + facePpAPI.key + '&return_attributes=gender,age,ethnicity';
+          url = facePpAPI.ENDPOINT + 'detect?api_secret=' + facePpAPI.secret + '&api_key=' + facePpAPI.key + '&return_attributes='+opts.return_attributes;
           ft.upload(opts.image_url, encodeURI(url), function(r) {
             defer.resolve(r)
           }, function(er) {

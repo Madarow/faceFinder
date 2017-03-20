@@ -2,10 +2,11 @@ angular.module('starter.controllers', [])
 
   // $rootScope contain all cordova dependencies
 
-  .controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $ionicPopup, $timeout, $state, facePlus) {
+  .controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $ionicPopup, $ionicModal, $timeout, $state, facePlus) {
 
     $scope.mySelfie = {};
     $rootScope.imgs = [];
+    $scope.opts = {};
 
     /*LOAD */
 
@@ -69,16 +70,38 @@ angular.module('starter.controllers', [])
     }
 
     /*SEND PICTURE*/
-    $scope.sendToApi = function() {
+
+    $scope.setOpts = function(){
+      $ionicModal.fromTemplateUrl('./templates/option-modal.html',{
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+          $scope.modalOpts = modal;
+          $scope.modalOpts.show();
+      });
+    }
+
+    $scope.preparOpts = function(){
+      $scope.modalOpts.hide();
+      var attr = '';
+      for(opt in $scope.opts){
+        attr+=opt+',';
+      }
+
+      $scope.sendToApi(attr.substring(0, attr.length-1));
+    }
+
+    $scope.sendToApi = function(attr) {
+
       var options = {
         image_url: $scope.mySelfie.nativeURL,
-        return_attributes: "gender,age"
+        return_attributes: attr
       }
       /*show load popup*/
       $scope.show();
 
       facePlus.doDetect(options).then((rep) => {
-        console.log(rep.response);
+        console.log(rep);
         var repObj = JSON.parse(rep.response);
 
         if (rep.responseCode === 200) {
@@ -125,7 +148,7 @@ angular.module('starter.controllers', [])
   .controller('GaleryCtrl', function($rootScope, $scope, facePlus) {
     $scope.imgs = $rootScope.imgs;
     $scope.comparList = $scope.imgs;
-
+    console.log($scope.imgs);
 
     $scope.sendToApiCompar = function() {
 
@@ -138,6 +161,14 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('OptCtrl', function($rootScope) {
+  .controller('OptCtrl', function($rootScope,$scope) {
+
+    $scope.removeAllPicture = function(){
+      for(img in $rootScope.imgs){
+        console.log( $rootScope.imgs[img].file)
+        /*TODO remove all picture*/;
+
+      }
+    }
 
   })

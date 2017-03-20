@@ -1,0 +1,13 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">options</h1>
+  </ion-header-bar>
+  <ion-content>
+    <ion-checkbox ng-model="opts.age">age</ion-checkbox>
+    <ion-checkbox ng-model="opts.ethnicity">ethnicity</ion-checkbox>
+    <ion-checkbox ng-model="opts.gender">gender</ion-checkbox>
+    <ion-checkbox ng-model="opts.smiling">smiling</ion-checkbox>
+
+    <button type="button" class="col button button-positive bottom-button" ng-click="preparOpts()">send picture</button>
+  </ion-content>
+</ion-modal-view>

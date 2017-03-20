@@ -3,16 +3,8 @@
     <div class="card border-radius" ng-repeat="img in imgs track by img.image_id">
       <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
       <div class="item row" ng-repeat="face in img.face ">
-        <p class="col center-align">
-          Age : {{face.attributes.age.value}}
-        </p>
-
-        <p class="col center-align">
-          Gender : {{face.attributes.gender.value}}
-        </p>
-
-        <p class="col center-align">
-          Ethnicity : {{face.attributes.ethnicity.value}}
+        <p class="col center-align" ng-repeat="(name,attr) in face.attributes">
+          {{name}} : {{attr.value}}
         </p>
       </div>
       <div>
