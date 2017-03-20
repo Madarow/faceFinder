@@ -36,60 +36,18 @@ angular.module('starter.facePlus', [])
          fileKey: "image_file",
          fileName: 'img_test',
          chunkedMode: false,
-         mimeType: "image/png",
+         mimeType: "image/png"
       };
       getDataUri(opts.image_url, function(dataUri) {
-          url = facePpAPI.ENDPOINT+'detect?api_secret='+facePpAPI.secret+'&api_key='+facePpAPI.key;
+          url = facePpAPI.ENDPOINT+'detect?api_secret='+facePpAPI.secret+'&api_key='+facePpAPI.key+'&return_attributes=gender,age';
           ft = new FileTransfer
           ft.upload(opts.image_url,encodeURI(url),function(r){
             console.log(r);
           },function(e){
             console.log(e);
           },options)
-          // Do whatever you'd like with the Data URI!
-          // $http({
-          //   method:'POST',
-          //   url:facePpAPI.ENDPOINT+'detect',
-          //   headers: {
-          //      'Content-Type': 'multipart/form-data'
-          //  },
-          //  params:{
-          //    api_key:facePpAPI.key,
-          //    api_secret:facePpAPI.secret,
-          //    image_url:opts.image_url
-          //  },
-          //  data: {
-          //      image_file: dataUri
-          //   },
-          //   transformRequest: function (data, headersGetter) {
-          //               var formData = new FormData();
-          //               angular.forEach(data, function (value, key) {
-          //                   formData.append(key, value);
-          //               });
-          //               return formData;
-          //           }
-          // }).then((r)=>{
-          //   console.log(r);
-          // })
       });
 
-    //   $http.post(facePpAPI.ENDPOINT+'detect?api_key='+facePpAPI.key
-    //                                +'&api_secret='+facePpAPI.secret
-    //                                +'&image_url='+opts.image_url
-    //                                +'&return_attributes='+opts.return_attributes
-    //                              ).then((re)=>{
-    //                                console.log(re);
-    //                              })
-    //   opts.api_secret = facePpAPI.secret;
-    //   opts.api_key = facePpAPI.key;
-    //   $http({ method:'POST',
-    //           url:this.ENDPOINT+'detect/',
-    //           header:{
-    //             'Content-type':opts
-    //             }
-    //         }).then((responce) => {
-    //             console.log(responce);
-    //           })
     }
   }
 

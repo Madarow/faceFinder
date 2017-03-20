@@ -3,9 +3,8 @@
     <p>home</p>
     <img ng-src="{{mySelfie.nativeURL}}" alt="" />
     <button type="button" ng-click="newPicture()">new picture</button>
-    <button type="button" ng-if="mySelfie.nativeURL != ''" ng-click="sendToApi()">send picture</button>
-
-    <div class="button" ngf-select ng-model="mySelfie.nativeURL" name="file" ngf-max-size="20MB" ng-click="sendImg()" >Select</div>
+    /* voir pour caché le bouton si il n'y a pas de photo */
+    <button type="button" ng-if="mySelfie != {}" ng-click="sendToApi()">send picture</button>
 
   </ion-content>
 </ion-view>

@@ -26,7 +26,6 @@ angular.module('starter.controllers', [])
   ionic.Platform.ready(function(){
     $rootScope.camera = navigator.camera;
     $rootScope.file = cordova.file;
-    $rootScope.fileTansfer = FileTransfer
 
     $scope.hide();
    });
@@ -38,6 +37,7 @@ $scope.showAlert = function() {
      template: error
    });
  };
+
   $scope.newPicture = function(){
 
     var options = {
