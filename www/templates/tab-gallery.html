@@ -1,5 +1,15 @@
 <ion-view view-title="Gallery">
   <ion-content class="padding">
-    <p>gallery</p>
+    <ion-list>
+      <ion-item ng-repeat="img in imgs track by img.image_id">
+        <img ng-src="{{img.file.nativeURL}}" alt="" />
+        <ion-list>
+          <ion-item ng-repeat="face in img.face ">
+            age : {{face.attributes.age.value}}
+            gender : {{face.attributes.gender.value}}
+          </ion-item>
+        </ion-list>
+      <ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

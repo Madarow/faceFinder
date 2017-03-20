@@ -5,7 +5,7 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function($scope,$rootScope,$ionicLoading,$ionicPopup,$timeout,facePlus) {
 
   $scope.mySelfie = {};
-  $scope.imgs = [];
+  $rootScope.imgs = [];
 
   /*LOAD */
 
@@ -25,6 +25,11 @@ angular.module('starter.controllers', [])
     $rootScope.camera = navigator.camera;
     $rootScope.file = cordova.file;
 
+    if(localStorage.getItem('imgsList')){
+      $rootScope.imgs = JSON.parse(localStorage.getItem('imgsList'));
+      console.log($rootScope.imgs);
+    }
+
     $scope.hide();
    });
 
@@ -41,8 +46,8 @@ $scope.showAlert = function() {
     var options = {
         cameraDirection:$rootScope.camera.Direction.FRONT,
         saveToPhotoAlbum:true,
-        targetWidth:200,
-        targetHeight:200,
+        targetWidth:400,
+        targetHeight:400,
         correctOrientation:true
     };
 
@@ -76,16 +81,36 @@ $scope.showAlert = function() {
     $scope.show();
 
     facePlus.doDetect(options).then((rep) => {
+      var repObj = JSON.parse(rep.response);
 
       if(rep.responseCode === 200){
-        repObj = JSON.parse(rep.response);
 
-        var img = {
-          image_id:repObj.image_id,
-          face:faces
+        if(repObj.faces.length == 0){
+          $scope.hide();
+          $ionicPopup.alert({
+            title: 'Ooups !!',
+            template: 'no face detected !'
+          });
+          $scope.mySelfie = {};
+        }else{
+          var date = new Date;
+
+          var img = {
+            file:$scope.mySelfie,
+            image_id:repObj.image_id,
+            face:repObj.faces,
+            d_day:date.getDate()
+          }
+
+          $rootScope.imgs.push(img);
+          $rootScope.imgs.reverse();
+          localStorage.removeItem('imgsList');
+          localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
+
+          $scope.hide();
         }
-        $scope.imgs.push(img)
-        $scope.hide();
+
+
       }else{
         $scope.hide();
         $scope.showAlert(rep)
@@ -95,8 +120,9 @@ $scope.showAlert = function() {
 
 })
 
-.controller('GaleryCtrl', function($rootScope) {
-
+.controller('GaleryCtrl', function($rootScope,$scope) {
+  $scope.imgs = $rootScope.imgs;
+  console.log($scope.imgs);
 })
 
 .controller('OptCtrl', function($rootScope) {
