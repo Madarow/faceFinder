@@ -52,7 +52,16 @@ angular.module('starter.facePlus', [])
         });
         return defer.promise;
 
+      },
+
+      doCompar: function(opts){
+        console.log(opts);
+        url = facePpAPI.ENDPOINT + 'compare?api_secret=' + facePpAPI.secret + '&api_key=' + facePpAPI.key+'&face_token1='+opts[0].face[0].face_token+'&face_token2='+opts[1].face[0].face_token;
+        $http.post(url).then((r) => {
+          console.log(r);
+        })
       }
+
     }
 
   });

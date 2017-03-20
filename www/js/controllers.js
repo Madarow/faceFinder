@@ -27,7 +27,6 @@ angular.module('starter.controllers', [])
 
     if(localStorage.getItem('imgsList')){
       $rootScope.imgs = JSON.parse(localStorage.getItem('imgsList'));
-      console.log($rootScope.imgs);
     }
 
     $scope.hide();
@@ -57,7 +56,6 @@ $scope.showAlert = function() {
 
   $scope.newPictureSuccess = function(picture){
     window.resolveLocalFileSystemURL(picture,function(success){
-      console.log(success.nativeURL,success);
       $scope.$apply(function () {
         $scope.mySelfie = success
       })
@@ -112,7 +110,6 @@ $scope.showAlert = function() {
           $state.go('tab.gallery');
         }
 
-
       }else{
         $scope.hide();
         $scope.showAlert(rep)
@@ -125,9 +122,20 @@ $scope.showAlert = function() {
   }
 })
 
-.controller('GaleryCtrl', function($rootScope,$scope) {
+.controller('GaleryCtrl', function($rootScope,$scope,facePlus) {
   $scope.imgs = $rootScope.imgs;
-  console.log($scope.imgs);
+  $scope.comparList = $scope.imgs;
+
+
+  $scope.sendToApiCompar = function(){
+
+    var imgs = $scope.comparList.filter(function(elm){
+      return elm.select === true;
+    });
+
+    facePlus.doCompar(imgs);
+  }
+
 })
 
 .controller('OptCtrl', function($rootScope) {
