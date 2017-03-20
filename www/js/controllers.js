@@ -117,6 +117,10 @@ $scope.showAlert = function() {
     })
   }
 
+  $scope.haveImg = function(){
+    return mySelfie.img != ''
+  }
+  
 })
 
 .controller('GaleryCtrl', function($rootScope,$scope) {
