@@ -2,7 +2,7 @@ angular.module('starter.controllers', [])
 
 // $rootScope contain all cordova dependencies
 
-.controller('HomeCtrl', function($scope,$rootScope,$ionicLoading,$ionicPopup,$timeout,facePlus) {
+.controller('HomeCtrl', function($scope,$rootScope,$ionicLoading,$ionicPopup,$timeout,$state, facePlus) {
 
   $scope.mySelfie = {};
   $rootScope.imgs = [];
@@ -48,14 +48,14 @@ $scope.showAlert = function() {
         saveToPhotoAlbum:true,
         targetWidth:400,
         targetHeight:400,
-        correctOrientation:true
+        correctOrientation:true,
+        quality: 100
     };
 
     $rootScope.camera.getPicture($scope.newPictureSuccess,$scope.newPictureError,options)
   }
 
   $scope.newPictureSuccess = function(picture){
-    // $scope.mySelfie =
     window.resolveLocalFileSystemURL(picture,function(success){
       console.log(success.nativeURL,success);
       $scope.$apply(function () {
@@ -107,6 +107,9 @@ $scope.showAlert = function() {
           localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
 
           $scope.hide();
+          $scope.mySelfie = {};
+
+          $state.go('tab.gallery');
         }
 
 
@@ -118,9 +121,8 @@ $scope.showAlert = function() {
   }
 
   $scope.haveImg = function(){
-    return mySelfie.img != ''
+    return $scope.mySelfie.nativeURL === undefined;
   }
-  
 })
 
 .controller('GaleryCtrl', function($rootScope,$scope) {

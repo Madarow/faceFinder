@@ -3,7 +3,33 @@
   bottom: 0;
 }
 
+.no-photo {
+  background-color: #959595;
+  height: 86%;
+  width: 100%;
+  text-align: center;
+  padding-top: 45%;
+}
+
+.no-photo-text {
+  font-size: 24px;
+  color: white;
+}
+
+.border-radius {
+  border-radius: 10px;
+}
+
+.icon-big {
+  color: white;
+  font-size: 60px;
+}
+
 .bottom-button {
   margin-left: 2px;
   margin-right: 2px;
+}
+
+.center-align {
+  text-align: center;
 }

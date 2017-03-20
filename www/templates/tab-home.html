@@ -1,13 +1,20 @@
 <ion-view view-title="Home">
   <ion-content class="padding">
-    <img ng-src="{{mySelfie.nativeURL}}" alt="" />
+    <div ng-hide="mySelfie.nativeURL" class="no-photo border-radius">
+      <i class="icon ion-eye-disabled icon-big"></i>
+      <p class="no-photo-text">No photo taken or imported</p>
+    </div>
+
+    <div ng-show="mySelfie.nativeURL" class="padding">
+      <img ng-src="{{mySelfie.nativeURL}}" class="border-radius" />
+    </div>
 
     <div class="actions-buttons row">
       <button type="button" class="col button button-positive bottom-button" ng-click="newPicture()">Take picture</button>
 
-      <button type="button" class="col button button-positive bottom-button" ng-hide="haveImg()" ng-click="sendToApi()">Send picture</button>
+      <button type="button" class="col button button-positive bottom-button" ng-click="getImageFromFiles()">My photos</button>
 
-      <button type="button" class="col button button-positive bottom-button" ng-click="getImageFromFiles()">Gallery</button>
+      <button type="button" class="col button button-positive bottom-button" ng-disabled="haveImg()" ng-click="sendToApi()">Send picture</button>
     </div>
 
   </ion-content>

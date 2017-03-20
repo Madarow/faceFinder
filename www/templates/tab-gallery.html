@@ -1,15 +1,20 @@
 <ion-view view-title="Gallery">
   <ion-content class="padding">
-    <ion-list>
-      <ion-item ng-repeat="img in imgs track by img.image_id">
-        <img ng-src="{{img.file.nativeURL}}" alt="" />
-        <ion-list>
-          <ion-item ng-repeat="face in img.face ">
-            Age : {{face.attributes.age.value}}
-            Gender : {{face.attributes.gender.value}}
-          </ion-item>
-        </ion-list>
-      <ion-item>
-    </ion-list>
+    <div class="card border-radius" ng-repeat="img in imgs track by img.image_id">
+      <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
+      <div class="item row" ng-repeat="face in img.face ">
+        <p class="col center-align">
+          Age : {{face.attributes.age.value}}
+        </p>
+
+        <p class="col center-align">
+          Gender : {{face.attributes.gender.value}}
+        </p>
+
+        <p class="col center-align">
+          Ethnicity : {{face.attributes.ethnicity.value}}
+        </p>
+      </div>
+      <div>
   </ion-content>
 </ion-view>
