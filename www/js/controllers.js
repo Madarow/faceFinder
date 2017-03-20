@@ -78,6 +78,7 @@ $scope.showAlert = function() {
     $scope.show();
 
     facePlus.doDetect(options).then((rep) => {
+      console.log(rep.response);
       var repObj = JSON.parse(rep.response);
 
       if(rep.responseCode === 200){
@@ -99,8 +100,7 @@ $scope.showAlert = function() {
             d_day:date.getDate()
           }
 
-          $rootScope.imgs.push(img);
-          $rootScope.imgs.reverse();
+          $rootScope.imgs.unshift(img);
           localStorage.removeItem('imgsList');
           localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
 
