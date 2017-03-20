@@ -1,10 +1,14 @@
 <ion-view view-title="Home">
   <ion-content class="padding">
-    <p>home</p>
     <img ng-src="{{mySelfie.nativeURL}}" alt="" />
-    <button type="button" ng-click="newPicture()">new picture</button>
-    /* voir pour caché le bouton si il n'y a pas de photo */
-    <button type="button" ng-if="mySelfie != {}" ng-click="sendToApi()">send picture</button>
+
+    <div class="actions-buttons row">
+      <button type="button" class="col button button-positive bottom-button" ng-click="newPicture()">Take picture</button>
+      <!-- /* voir pour caché le bouton si il n'y a pas de photo */ -->
+      <button type="button" class="col button button-positive bottom-button" ng-hide="mySelfie.img.nativeURL.length == 0" ng-click="sendToApi()">Send picture</button>
+
+      <button type="button" class="col button button-positive bottom-button" ng-click="getImageFromFiles()">Gallery</button>
+    </div>
 
   </ion-content>
 </ion-view>

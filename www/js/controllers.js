@@ -72,7 +72,6 @@ $scope.showAlert = function() {
 
   /*SEND PICTURE*/
   $scope.sendToApi = function(){
-
     var options = {
       image_url:$scope.mySelfie.nativeURL,
       return_attributes:"gender,age"
