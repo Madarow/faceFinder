@@ -161,14 +161,35 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('OptCtrl', function($rootScope,$scope) {
+  .controller('OptCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading) {
 
     $scope.removeAllPicture = function(){
+      $ionicLoading.show({
+        template: 'Loading...'
+      });
+      var path;
       for(img in $rootScope.imgs){
-        console.log( $rootScope.imgs[img].file)
+        path = $rootScope.imgs[img].file.nativeURL
         /*TODO remove all picture*/;
-
+        window.resolveLocalFileSystemURL(path,function(fileEntry) {
+                      fileEntry.remove(function(){
+                          // The file has been removed succesfully
+                          console.log('ok');
+                      },function(error){
+                          // Error deleting the file
+                          console.log(error);
+                      },function(){
+                         // The file doesn't exist
+                         console.log('no file');
+                      });
+        	});
       }
+      $ionicLoading.hide();
+      $ionicPopup.alert({
+        title: 'Done !!',
+        template: 'all pictures removed!'
+      });
+      localStorage.removeItem('imgsList');
     }
 
   })

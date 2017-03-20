@@ -2,12 +2,13 @@
   <ion-content class="padding">
     <div class="card border-radius" ng-repeat="img in imgs track by img.image_id">
       <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
-      <div class="item row" ng-repeat="face in img.face ">
+
+      <div class="item row" ng-repeat="face in img.face" scroll="x">
         <p class="col center-align" ng-repeat="(name,attr) in face.attributes">
           {{name}} : {{attr.value}}
         </p>
       </div>
-      <div>
+      <ion-content>
         <button type="button" name="button" ng-click="sendToApiCompar()">compare</button>
 
   </ion-content>
