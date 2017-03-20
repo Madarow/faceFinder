@@ -4,5 +4,8 @@
     <img ng-src="{{mySelfie.nativeURL}}" alt="" />
     <button type="button" ng-click="newPicture()">new picture</button>
     <button type="button" ng-if="mySelfie.nativeURL != ''" ng-click="sendToApi()">send picture</button>
+
+    <div class="button" ngf-select ng-model="mySelfie.nativeURL" name="file" ngf-max-size="20MB" ng-click="sendImg()" >Select</div>
+
   </ion-content>
 </ion-view>
