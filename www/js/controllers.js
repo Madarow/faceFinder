@@ -5,20 +5,18 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', function($scope,$rootScope,$ionicLoading,$ionicPopup,$timeout,facePlus) {
 
   $scope.mySelfie = {};
+  $scope.imgs = [];
 
   /*LOAD */
 
-
   $scope.show = function() {
     $ionicLoading.show({
-      template: 'Loading...',
+      template: 'Loading...'
     });
   };
 
   $scope.hide = function(){
-    $ionicLoading.hide().then(function(){
-       console.log("The loading indicator is now hidden");
-    });
+    $ionicLoading.hide();
   };
 
   $scope.show();
@@ -69,11 +67,30 @@ $scope.showAlert = function() {
 
   /*SEND PICTURE*/
   $scope.sendToApi = function(){
+
     var options = {
       image_url:$scope.mySelfie.nativeURL,
       return_attributes:"gender,age"
     }
-    facePlus.doDetect(options)
+    /*show load popup*/
+    $scope.show();
+
+    facePlus.doDetect(options).then((rep) => {
+
+      if(rep.responseCode === 200){
+        repObj = JSON.parse(rep.response);
+
+        var img = {
+          image_id:repObj.image_id,
+          face:faces
+        }
+        $scope.imgs.push(img)
+        $scope.hide();
+      }else{
+        $scope.hide();
+        $scope.showAlert(rep)
+      }
+    })
   }
 
 })

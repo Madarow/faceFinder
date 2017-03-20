@@ -2,6 +2,7 @@ angular.module('starter.facePlus', [])
 
   .factory('facePlus', function($q, $http, $rootScope) {
 
+
     var facePpAPI = {
       ENDPOINT: 'https://api-us.faceplusplus.com/facepp/v3/',
       secret: 'sBbdR05BdbyTo8GOnrxCYKYWb22UCgJ-',
@@ -30,23 +31,26 @@ angular.module('starter.facePlus', [])
 
     return {
       doDetect: function(opts) {
-        // Usage
+        var defer = $q.defer()
 
+        var ft = new FileTransfer
+        // Usage
         options = {
           fileKey: "image_file",
           fileName: 'img_test',
           chunkedMode: false,
           mimeType: "image/png"
         };
+
         getDataUri(opts.image_url, function(dataUri) {
           url = facePpAPI.ENDPOINT + 'detect?api_secret=' + facePpAPI.secret + '&api_key=' + facePpAPI.key + '&return_attributes=gender,age';
-          ft = new FileTransfer
-          ft.upload(opts.image_url, encodeURI(url), function(r) {
-            console.log(r);
-          }, function(e) {
-            console.log(e);
-          }, options)
+          ft.upload(opts.image_url, encodeURI(url), function(r){
+            defer.resolve(r)
+          }, function(er){
+            defer.resolve(er)
+          }, options);
         });
+        return defer.promise;
 
       }
     }
