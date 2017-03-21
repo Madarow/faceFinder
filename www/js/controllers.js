@@ -145,10 +145,14 @@ angular.module('starter.controllers', [])
     }
   })
 
-  .controller('GaleryCtrl', function($rootScope, $scope, facePlus) {
+  .controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, facePlus) {
+
     $scope.imgs = $rootScope.imgs;
     $scope.comparList = $scope.imgs;
-    console.log($scope.imgs);
+
+
+
+
 
     $scope.sendToApiCompar = function() {
 
@@ -159,13 +163,59 @@ angular.module('starter.controllers', [])
       facePlus.doCompar(imgs);
     }
 
+    $scope.removePicture = function(img){
+
+
+      $scope.myPopup = $ionicPopup.show({
+        template: 'Really ?!?',
+        title: 'Remove the picture',
+        subTitle: 'are you sure ?',
+        scope: $scope,
+        buttons: [
+          { text: 'Cancel' },
+          {
+            text: '<b>Yes ! Do it !</b>',
+            type: 'button-positive',
+            onTap: function(e) {
+              $scope.imgs = $scope.imgs.filter(function(elm) {
+                return elm.image_id != img.image_id;
+              });
+
+              window.resolveLocalFileSystemURL(img.file.nativeURL,function(fileEntry) {
+                            fileEntry.remove(function(){
+                              localStorage.removeItem('imgsList');
+                              localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
+                              $scope.comparList = $scope.imgs;
+                              $ionicPopup.alert({
+                                title: 'Done !!',
+                                template: 'Picture removed!'
+                              });
+                            },function(error){
+                              $ionicPopup.alert({
+                                title: 'Ouups !!',
+                                template: error
+                              });
+                            },function(){
+                               $ionicPopup.alert({
+                                 title: 'Nope !!',
+                                 template: 'No file ! like a spoon !'
+                               });
+                            });
+                });
+
+            }
+          }
+        ]
+      });
+    }
+
   })
 
   .controller('OptCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading) {
 
     $scope.removeAllPicture = function(){
       $ionicLoading.show({
-        template: 'Loading...'
+        template: 'Removing...'
       });
       var path;
       for(img in $rootScope.imgs){
