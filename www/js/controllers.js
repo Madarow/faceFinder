@@ -149,18 +149,43 @@ angular.module('starter.controllers', [])
     }
   })
 
-.controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, facePlus) {
+.controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading, facePlus) {
 
       $scope.imgs = $rootScope.imgs;
-      $scope.comparList = $scope.imgs;
-      $scope.sendToApiCompar = function() {
+      $scope.comparList = [];
 
-        var imgs = $scope.comparList.filter(function(elm) {
-          return elm.select === true;
-        });
+      $scope.imgSelected = function(img){
 
-        facePlus.doCompar(imgs);
+        if(img.select == true){
+          $scope.comparList.push(img);
+        }else{
+          $scope.comparList.filter(function(elm){
+            return elm.image_id != img.image_id
+          })
+        }
+
+        if($scope.comparList.length == 2){
+
+          $ionicLoading.show({
+            template: 'Loading...'
+          });
+
+          facePlus.doCompar($scope.comparList).then((r) => {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+              title: 'Done !!',
+              template: 'confidence : ' + r.data.confidence
+            });
+            $scope.imgs.map(function(elm){
+              elm.select = false;
+              return elm;
+            })
+            $scope.comparList.length = 0
+          });
+
+        }
       }
+
 
       $scope.removePicture = function(img){
 
