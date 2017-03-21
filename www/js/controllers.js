@@ -44,7 +44,7 @@ angular.module('starter.controllers', [])
 
       var options = {
         cameraDirection: $rootScope.camera.Direction.FRONT,
-        saveToPhotoAlbum: true,
+        saveToPhotoAlbum: false,
         targetWidth: 400,
         targetHeight: 400,
         correctOrientation: true,
