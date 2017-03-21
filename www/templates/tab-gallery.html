@@ -1,13 +1,16 @@
 <ion-view view-title="Gallery">
-  <ion-content class="padding">
-    <div class="card border-radius" ng-repeat="img in imgs track by img.image_id">
-      <ion-checkbox ng-model="img.select" ng-click="imgSelected(img)" >add</ion-checkbox>
+  <ion-content class="padding" overflow-scroll="true">
+    <div class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
+      <ion-checkbox class="item" ng-model="img.select" ng-click="imgSelected(img)">Add</ion-checkbox>
       <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
-      <div class="item row" ng-repeat="face in img.face">
-        <div class="col center-align" ng-repeat="(name,attr) in face.attributes">
-          {{name}} : {{attr.value}}
+
+      <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
+        <div class="item row" ng-repeat="face in img.face" style="overflow-x: scroll;">
+          <div class="col center-align" ng-repeat="(name,attr) in face.attributes">
+            {{name}} : {{attr.value}}
+          </div>
         </div>
-      </div>
+      </ion-scroll>
 
       <button class="button red col" ng-click="removePicture(img)">Delete</button>
     </div>

@@ -37,6 +37,10 @@
   color: red;
 }
 
+.overflow-scroll {
+  overflow-x: scroll;
+}
+
 .bottom-button {
   margin-left: 2px;
   margin-right: 2px;
