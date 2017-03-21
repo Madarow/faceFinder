@@ -149,7 +149,7 @@ angular.module('starter.controllers', [])
 
     $scope.imgs = $rootScope.imgs;
     $scope.comparList = $scope.imgs;
-
+    console.log($rootScope.imgs);
     $scope.sendToApiCompar = function() {
 
       var imgs = $scope.comparList.filter(function(elm) {
@@ -238,7 +238,7 @@ angular.module('starter.controllers', [])
         title: 'Done !!',
         template: 'all pictures removed!'
       });
-      $rootScope.imgs = [];
+      $rootScope.imgs.length = 0;
       localStorage.removeItem('imgsList');
     }
 
