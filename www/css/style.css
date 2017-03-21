@@ -20,9 +20,21 @@
   border-radius: 10px;
 }
 
-.icon-big {
+.icon-eye {
   color: white;
   font-size: 60px;
+}
+
+.icon-delete {
+  color: red;
+  position: absolute;
+  right: 16px;
+  bottom: 80px;
+  font-size: 60px;
+}
+
+.red {
+  color: red;
 }
 
 .bottom-button {

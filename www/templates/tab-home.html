@@ -1,12 +1,13 @@
 <ion-view view-title="Home">
   <ion-content class="padding">
     <div ng-hide="mySelfie.nativeURL" class="no-photo border-radius">
-      <i class="icon ion-eye-disabled icon-big"></i>
+      <i class="icon ion-eye-disabled icon-eye"></i>
       <p class="no-photo-text">No photo taken or imported</p>
     </div>
 
     <div ng-show="mySelfie.nativeURL" class="padding">
       <img ng-src="{{mySelfie.nativeURL}}" class="border-radius" />
+      <i class="icon ion-close-circled icon-delete" ng-click="removeActivePicture()"></i>
     </div>
 
     <div class="actions-buttons row">

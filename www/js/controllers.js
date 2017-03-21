@@ -143,6 +143,10 @@ angular.module('starter.controllers', [])
     $scope.haveImg = function() {
       return $scope.mySelfie.nativeURL === undefined;
     }
+
+    $scope.removeActivePicture = function() {
+      $scope.mySelfie = {};
+    }
   })
 
 .controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, facePlus) {
