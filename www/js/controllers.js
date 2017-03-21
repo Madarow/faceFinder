@@ -186,6 +186,7 @@ angular.module('starter.controllers', [])
                               localStorage.removeItem('imgsList');
                               localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
                               $scope.comparList = $scope.imgs;
+                              $rootScope.imgs = $scope.imgs;
                               $ionicPopup.alert({
                                 title: 'Done !!',
                                 template: 'Picture removed!'
@@ -239,6 +240,7 @@ angular.module('starter.controllers', [])
         title: 'Done !!',
         template: 'all pictures removed!'
       });
+      $rootScope.imgs = [];
       localStorage.removeItem('imgsList');
     }
 
