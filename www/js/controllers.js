@@ -184,7 +184,7 @@ angular.module('starter.controllers', [])
                               localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
                               $rootScope.imgs = $scope.imgs;
                               $scope.comparList = $scope.imgs;
-                              $rootScope.imgs = $scope.imgs;
+
                               $ionicPopup.alert({
                                 title: 'Done !!',
                                 template: 'Picture removed!'
