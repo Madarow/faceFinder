@@ -40,6 +40,31 @@ angular.module('starter.controllers', [])
       });
     };
 
+    $scope.getImageFromFiles = function(){
+      var options = {
+        quality: 100,
+        destinationType:Camera.DestinationType.FILE_URI,
+        mediaType:Camera.MediaType.ALLMEDIA,
+        encodingType:Camera.EncodingType.JPEG,
+        saveToPhotoAlbum:true,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+      }
+      $rootScope.camera.getPicture(function(r){
+        
+        $scope.$apply(function() {
+          $scope.mySelfie.nativeURL = r
+        })
+      },function(error){
+        console.log(error);
+
+        $ionicPopup.alert({
+          title: 'Ooups !!',
+          template: error
+        });
+      }, options)
+
+    }
+
     $scope.newPicture = function() {
 
       var options = {
