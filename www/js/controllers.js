@@ -150,10 +150,6 @@ angular.module('starter.controllers', [])
     $scope.imgs = $rootScope.imgs;
     $scope.comparList = $scope.imgs;
 
-
-
-
-
     $scope.sendToApiCompar = function() {
 
       var imgs = $scope.comparList.filter(function(elm) {
@@ -183,8 +179,10 @@ angular.module('starter.controllers', [])
 
               window.resolveLocalFileSystemURL(img.file.nativeURL,function(fileEntry) {
                             fileEntry.remove(function(){
+                              $rootScope.imgs = {};
                               localStorage.removeItem('imgsList');
                               localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
+                              $rootScope.imgs = $scope.imgs;
                               $scope.comparList = $scope.imgs;
                               $rootScope.imgs = $scope.imgs;
                               $ionicPopup.alert({
