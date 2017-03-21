@@ -1,6 +1,7 @@
 <ion-view view-title="Gallery">
   <ion-content class="padding">
     <div class="card border-radius" ng-repeat="img in imgs track by img.image_id">
+      <ion-checkbox ng-model="img.select" >add</ion-checkbox>
       <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
       <div class="item row" ng-repeat="face in img.face">
         <div class="col center-align" ng-repeat="(name,attr) in face.attributes">

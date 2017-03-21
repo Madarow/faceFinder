@@ -25,7 +25,6 @@ angular.module('starter.controllers', [])
     ionic.Platform.ready(function() {
       $rootScope.camera = navigator.camera;
       $rootScope.file = cordova.file;
-
       if (localStorage.getItem('imgsList')) {
         $rootScope.imgs = JSON.parse(localStorage.getItem('imgsList'));
       }
@@ -140,73 +139,74 @@ angular.module('starter.controllers', [])
       })
     }
 
+
     $scope.haveImg = function() {
       return $scope.mySelfie.nativeURL === undefined;
     }
   })
 
-  .controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, facePlus) {
+.controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, facePlus) {
 
-    $scope.imgs = $rootScope.imgs;
-    $scope.comparList = $scope.imgs;
-    console.log($rootScope.imgs);
-    $scope.sendToApiCompar = function() {
+      $scope.imgs = $rootScope.imgs;
+      $scope.comparList = $scope.imgs;
+      $scope.sendToApiCompar = function() {
 
-      var imgs = $scope.comparList.filter(function(elm) {
-        return elm.select === true;
-      });
+        var imgs = $scope.comparList.filter(function(elm) {
+          return elm.select === true;
+        });
 
-      facePlus.doCompar(imgs);
-    }
+        facePlus.doCompar(imgs);
+      }
 
-    $scope.removePicture = function(img){
+      $scope.removePicture = function(img){
 
 
-      $scope.myPopup = $ionicPopup.show({
-        template: 'Really ?!?',
-        title: 'Remove the picture',
-        subTitle: 'are you sure ?',
-        scope: $scope,
-        buttons: [
-          { text: 'Cancel' },
-          {
-            text: '<b>Yes ! Do it !</b>',
-            type: 'button-positive',
-            onTap: function(e) {
-              $scope.imgs = $scope.imgs.filter(function(elm) {
-                return elm.image_id != img.image_id;
-              });
-
-              window.resolveLocalFileSystemURL(img.file.nativeURL,function(fileEntry) {
-                            fileEntry.remove(function(){
-                              $rootScope.imgs = {};
-                              localStorage.removeItem('imgsList');
-                              localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
-                              $rootScope.imgs = $scope.imgs;
-                              $scope.comparList = $scope.imgs;
-
-                              $ionicPopup.alert({
-                                title: 'Done !!',
-                                template: 'Picture removed!'
-                              });
-                            },function(error){
-                              $ionicPopup.alert({
-                                title: 'Ouups !!',
-                                template: error
-                              });
-                            },function(){
-                               $ionicPopup.alert({
-                                 title: 'Nope !!',
-                                 template: 'No file ! like a spoon !'
-                               });
-                            });
+        $scope.myPopup = $ionicPopup.show({
+          template: 'Really ?!?',
+          title: 'Remove the picture',
+          subTitle: 'are you sure ?',
+          scope: $scope,
+          buttons: [
+            { text: 'Cancel' },
+            {
+              text: '<b>Yes ! Do it !</b>',
+              type: 'button-positive',
+              onTap: function(e) {
+                $scope.imgs = $scope.imgs.filter(function(elm) {
+                  return elm.image_id != img.image_id;
                 });
 
+                window.resolveLocalFileSystemURL(img.file.nativeURL,function(fileEntry) {
+                              fileEntry.remove(function(){
+                                $rootScope.imgs = {};
+                                localStorage.removeItem('imgsList');
+                                localStorage.setItem('imgsList', JSON.stringify($scope.imgs));
+                                $rootScope.imgs = $scope.imgs;
+                                $scope.comparList = $scope.imgs;
+                                $rootScope.imgs = $scope.imgs;
+                                $ionicPopup.alert({
+                                  title: 'Done !!',
+                                  template: 'Picture removed!'
+                                });
+                              },function(error){
+                                $ionicPopup.alert({
+                                  title: 'Ouups !!',
+                                  template: error
+                                });
+                              },function(){
+                                 $ionicPopup.alert({
+                                   title: 'Nope !!',
+                                   template: 'No file ! like a spoon !'
+                                 });
+                              });
+                  });
+
+              }
             }
-          }
-        ]
-      });
-    }
+          ]
+        });
+      }
+
 
   })
 
@@ -233,6 +233,7 @@ angular.module('starter.controllers', [])
                       });
         	});
       }
+
       $ionicLoading.hide();
       $ionicPopup.alert({
         title: 'Done !!',
