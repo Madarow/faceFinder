@@ -225,13 +225,14 @@ angular.module('starter.controllers', [])
 
     $scope.imgSelected = function(face) {
 
-      if (face.select == true) {
-        $scope.comparList.push(face);
-      } else {
-        $scope.comparList.filter(function(face) {
-          return face.face_token !== face.face_token
-        })
-      }
+        if(face.select == true){
+          $scope.comparList.push(face);
+        }else{
+          $scope.comparList = $scope.comparList.filter(function(face){
+            return face.face_token !== face.face_token
+          })
+        }
+
 
       if ($scope.comparList.length == 2) {
 
@@ -240,7 +241,7 @@ angular.module('starter.controllers', [])
         });
 
         facePlus.doCompar($scope.comparList).then((r) => {
-          if (r.responseCode == 200) {
+          if (r.status == 200) {
             $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'Done !!',
@@ -253,6 +254,8 @@ angular.module('starter.controllers', [])
 
             $scope.comparList.length = 0;
           } else {
+            $ionicLoading.hide();
+
             $ionicPopup.alert({
               title: 'An error occured !!',
               template: 'Please try again'
