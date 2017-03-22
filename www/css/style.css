@@ -11,6 +11,14 @@
   padding-top: 45%;
 }
 
+.no-gallery {
+  background-color: #959595;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding-top: 45%;
+}
+
 .no-photo-text {
   font-size: 24px;
   color: white;
@@ -20,7 +28,7 @@
   border-radius: 10px;
 }
 
-.icon-eye {
+.icon-white {
   color: white;
   font-size: 60px;
 }

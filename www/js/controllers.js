@@ -3,15 +3,15 @@ angular.module('starter.controllers', [])
   .controller('HomeCtrl', function($scope, $rootScope, $ionicLoading, $ionicPopup, $ionicModal, $timeout, $state, facePlus) {
 
     $scope.mySelfie = {};
-    
+
     $rootScope.imgs = [];
 
     /*send options */
     $scope.opts = {
-      age:false,
-      ethnicity:false,
-      gender:false,
-      smiling:false,
+      age: false,
+      ethnicity: false,
+      gender: false,
+      smiling: false,
     };
 
     /*LOAD */
@@ -53,27 +53,27 @@ angular.module('starter.controllers', [])
     };
 
     /*picture from gallery*/
-    $scope.getImageFromFiles = function(){
+    $scope.getImageFromFiles = function() {
 
       var options = {
-        quality         : 75,
-        destinationType : Camera.DestinationType.DATA_URI,
-        allowEdit       : true,
-        sourceType      : Camera.PictureSourceType.PHOTOLIBRARY,
-        encodingType    : Camera.EncodingType.JPEG,
-        targetWidth     : 400,
-        targetHeight    : 400,
+        quality: 75,
+        destinationType: Camera.DestinationType.DATA_URI,
+        allowEdit: true,
+        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 400,
+        targetHeight: 400,
         // popoverOptions  : CameraPopoverOptions,
         saveToPhotoAlbum: false
       }
 
-      $rootScope.camera.getPicture(function(r){
+      $rootScope.camera.getPicture(function(r) {
 
         $scope.$apply(function() {
           $scope.mySelfie.nativeURL = r
         })
 
-      },function(error){
+      }, function(error) {
 
         $ionicPopup.alert({
           title: 'Ooups !!',
@@ -116,31 +116,31 @@ angular.module('starter.controllers', [])
 
     /*SEND PICTURE*/
 
-    $scope.setOpts = function(){
+    $scope.setOpts = function() {
 
-      $ionicModal.fromTemplateUrl('./templates/option-modal.html',{
+      $ionicModal.fromTemplateUrl('./templates/option-modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
       }).then(function(modal) {
 
-          $scope.modalOpts = modal;
-          $scope.modalOpts.show();
+        $scope.modalOpts = modal;
+        $scope.modalOpts.show();
 
       });
     }
 
-    $scope.preparOpts = function(){
+    $scope.preparOpts = function() {
 
       $scope.modalOpts.hide();
       var attr = '';
 
-      for(opt in $scope.opts){
+      for (opt in $scope.opts) {
 
-        if(opt !== 'all')
-          attr+=opt+',';
+        if (opt !== 'all')
+          attr += opt + ',';
 
       }
-      $scope.sendToApi(attr.substring(0, attr.length-1));
+      $scope.sendToApi(attr.substring(0, attr.length - 1));
     }
 
     $scope.sendToApi = function(attr) {
@@ -207,7 +207,7 @@ angular.module('starter.controllers', [])
       $scope.mySelfie = {};
     }
 
-    $scope.toogleOpts = function(){
+    $scope.toogleOpts = function() {
 
       $scope.opts.age = $scope.opts.all
       $scope.opts.ethnicity = $scope.opts.all
@@ -218,55 +218,62 @@ angular.module('starter.controllers', [])
 
   })
 
-.controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading, facePlus) {
+  .controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading, facePlus) {
 
-      $scope.imgs = $rootScope.imgs;
-      $scope.comparList = [];
+    $scope.imgs = $rootScope.imgs;
+    $scope.comparList = [];
 
-      $scope.imgSelected = function(face){
+    $scope.imgSelected = function(face) {
 
-        if(face.select == true){
-          $scope.comparList.push(face);
-        }else{
-          $scope.comparList.filter(function(face){
-            return face.face_token !== face.face_token
-          })
-        }
+      if (face.select == true) {
+        $scope.comparList.push(face);
+      } else {
+        $scope.comparList.filter(function(face) {
+          return face.face_token !== face.face_token
+        })
+      }
 
-        if($scope.comparList.length == 2){
+      if ($scope.comparList.length == 2) {
 
-          $ionicLoading.show({
-            template: 'Loading...'
-          });
+        $ionicLoading.show({
+          template: 'Loading...'
+        });
 
-          facePlus.doCompar($scope.comparList).then((r) => {
-
+        facePlus.doCompar($scope.comparList).then((r) => {
+          if (r.responseCode == 200) {
             $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'Done !!',
               template: 'confidence : ' + r.data.confidence
             });
 
-            for(i=0;i<2;i++){
+            for (i = 0; i < 2; i++) {
               $scope.comparList[i].select = false
             }
 
-            $scope.comparList.length = 0
-          });
+            $scope.comparList.length = 0;
+          } else {
+            $ionicPopup.alert({
+              title: 'An error occured !!',
+              template: 'Please try again'
+            });
+          }
+        });
 
-        }
       }
+    }
 
 
-      $scope.removePicture = function(img){
+    $scope.removePicture = function(img) {
 
         $scope.myPopup = $ionicPopup.show({
           template: 'Really ?!?',
           title: 'Remove the picture',
           subTitle: 'are you sure ?',
           scope: $scope,
-          buttons: [
-            { text: 'Cancel' },
+          buttons: [{
+              text: 'Cancel'
+            },
             {
               text: '<b>Yes ! Do it !</b>',
               type: 'button-positive',
@@ -283,24 +290,24 @@ angular.module('starter.controllers', [])
                 $scope.comparList = $scope.imgs;
                 $rootScope.imgs = $scope.imgs;
 
-                window.resolveLocalFileSystemURL(img.file.nativeURL,function(fileEntry) {
-                              fileEntry.remove(function(){
-                                $ionicPopup.alert({
-                                  title: 'Done !!',
-                                  template: 'Picture removed!'
-                                });
-                              },function(error){
-                                $ionicPopup.alert({
-                                  title: 'Ouups !!',
-                                  template: error
-                                });
-                              },function(){
-                                 $ionicPopup.alert({
-                                   title: 'Nope !!',
-                                   template: 'No file ! like a spoon !'
-                                 });
-                              });
+                window.resolveLocalFileSystemURL(img.file.nativeURL, function(fileEntry) {
+                  fileEntry.remove(function() {
+                    $ionicPopup.alert({
+                      title: 'Done !!',
+                      template: 'Picture removed!'
+                    });
+                  }, function(error) {
+                    $ionicPopup.alert({
+                      title: 'Ouups !!',
+                      template: error
+                    });
+                  }, function() {
+                    $ionicPopup.alert({
+                      title: 'Nope !!',
+                      template: 'No file ! like a spoon !'
+                    });
                   });
+                });
 
               }
             }
@@ -308,39 +315,43 @@ angular.module('starter.controllers', [])
         });
       }
 
+      $scope.getNumberOfImages = function() {
+        return $scope.imgs.length > 0;
+      }
   })
 
   .controller('OptCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading) {
 
-    $scope.removeAllPicture = function(){
+    $scope.removeAllPicture = function() {
       $ionicLoading.show({
         template: 'Removing...'
       });
       var path;
-      for(img in $rootScope.imgs){
+      for (img in $rootScope.imgs) {
         path = $rootScope.imgs[img].file.nativeURL
-        /*TODO remove all picture*/;
-        window.resolveLocalFileSystemURL(path,function(fileEntry) {
-                      fileEntry.remove(function(){
-                        $ionicLoading.hide();
-                        $ionicPopup.alert({
-                          title: 'Done !!',
-                          template: 'all pictures removed!'
-                        });
-                        $rootScope.imgs.length = 0;
-                        localStorage.removeItem('imgsList');
-                      },function(error){
-                        $ionicPopup.alert({
-                          title: 'Oops !!',
-                          template: error
-                        });
-                      },function(){
-                        $ionicPopup.alert({
-                          title: 'Oops !!',
-                          template: 'file doesn\'t exist (like a spoon) !'
-                        });
-                      });
-      	});
+        /*TODO remove all picture*/
+        ;
+        window.resolveLocalFileSystemURL(path, function(fileEntry) {
+          fileEntry.remove(function() {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+              title: 'Done !!',
+              template: 'all pictures removed!'
+            });
+            $rootScope.imgs.length = 0;
+            localStorage.removeItem('imgsList');
+          }, function(error) {
+            $ionicPopup.alert({
+              title: 'Oops !!',
+              template: error
+            });
+          }, function() {
+            $ionicPopup.alert({
+              title: 'Oops !!',
+              template: 'file doesn\'t exist (like a spoon) !'
+            });
+          });
+        });
       }
     }
   })
