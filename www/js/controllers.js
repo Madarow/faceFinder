@@ -6,7 +6,12 @@ angular.module('starter.controllers', [])
 
     $scope.mySelfie = {};
     $rootScope.imgs = [];
-    $scope.opts = {};
+    $scope.opts = {
+      age:false,
+      ethnicity:false,
+      gender:false,
+      smiling:false,
+    };
 
     /*LOAD */
 
@@ -41,22 +46,25 @@ angular.module('starter.controllers', [])
     };
 
     $scope.getImageFromFiles = function(){
+
       var options = {
-        quality: 100,
-        destinationType:Camera.DestinationType.FILE_URI,
-        mediaType:Camera.MediaType.ALLMEDIA,
-        encodingType:Camera.EncodingType.JPEG,
-        saveToPhotoAlbum:true,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+        quality         : 75,
+        destinationType : Camera.DestinationType.DATA_URI,
+        allowEdit       : true,
+        sourceType      : Camera.PictureSourceType.PHOTOLIBRARY,
+        encodingType    : Camera.EncodingType.JPEG,
+        targetWidth     : 400,
+        targetHeight    : 400,
+        // popoverOptions  : CameraPopoverOptions,
+        saveToPhotoAlbum: false
       }
+
       $rootScope.camera.getPicture(function(r){
-        
+        console.log(r);
         $scope.$apply(function() {
           $scope.mySelfie.nativeURL = r
         })
       },function(error){
-        console.log(error);
-
         $ionicPopup.alert({
           title: 'Ooups !!',
           template: error
@@ -172,6 +180,15 @@ angular.module('starter.controllers', [])
     $scope.removeActivePicture = function() {
       $scope.mySelfie = {};
     }
+
+    $scope.toogleOpts = function(){
+      $scope.opts = {
+        age:!$scope.opts.age,
+        ethnicity:!$scope.opts.ethnicity  ,
+        gender:!$scope.opts.gender,
+        smiling:!$scope.opts.smiling
+      }
+    }
   })
 
 .controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading, facePlus) {
@@ -185,7 +202,7 @@ angular.module('starter.controllers', [])
           $scope.comparList.push(img);
         }else{
           $scope.comparList.filter(function(elm){
-            return elm.image_id != img.image_id
+            return elm.image_id !== img.image_id
           })
         }
 
@@ -196,15 +213,18 @@ angular.module('starter.controllers', [])
           });
 
           facePlus.doCompar($scope.comparList).then((r) => {
+
             $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'Done !!',
               template: 'confidence : ' + r.data.confidence
             });
+
             $scope.imgs.map(function(elm){
               elm.select = false;
               return elm;
             })
+
             $scope.comparList.length = 0
           });
 
