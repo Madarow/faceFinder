@@ -197,13 +197,13 @@ angular.module('starter.controllers', [])
       $scope.imgs = $rootScope.imgs;
       $scope.comparList = [];
 
-      $scope.imgSelected = function(img){
-
-        if(img.select == true){
-          $scope.comparList.push(img);
+      $scope.imgSelected = function(face){
+        console.log(face);
+        if(face.select == true){
+          $scope.comparList.push(face);
         }else{
-          $scope.comparList.filter(function(elm){
-            return elm.image_id !== img.image_id
+          $scope.comparList.filter(function(face){
+            return face.face_token !== face.face_token
           })
         }
 
@@ -221,10 +221,9 @@ angular.module('starter.controllers', [])
               template: 'confidence : ' + r.data.confidence
             });
 
-            $scope.imgs.map(function(elm){
-              elm.select = false;
-              return elm;
-            })
+            for(i=0;i<2;i++){
+              $scope.comparList[i].select = false
+            }
 
             $scope.comparList.length = 0
           });

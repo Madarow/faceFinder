@@ -57,12 +57,12 @@ angular.module('starter.facePlus', [])
       doCompar: function(opts) {
         var defer = $q.defer()
 
-        url = facePpAPI.ENDPOINT + 'compare?api_secret=' + facePpAPI.secret + '&api_key=' + facePpAPI.key + '&face_token1=' + opts[0].face[0].face_token + '&face_token2=' + opts[1].face[0].face_token;
+        url = facePpAPI.ENDPOINT + 'compare?api_secret=' + facePpAPI.secret + '&api_key=' + facePpAPI.key + '&face_token1=' + opts[0].face_token + '&face_token2=' + opts[1].face_token;
         $http.post(url).then((r) => {
           defer.resolve(r)
         })
         return defer.promise;
-        
+
       }
 
     }

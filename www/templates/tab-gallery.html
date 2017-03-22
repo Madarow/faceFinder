@@ -1,7 +1,9 @@
 <ion-view view-title="Gallery">
   <ion-content class="padding" overflow-scroll="true">
     <div class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
-      <ion-checkbox class="item" ng-model="img.select" ng-click="imgSelected(img)">Add</ion-checkbox>
+      <div class="" ng-repeat="face in img.face">
+        <ion-checkbox class="item" ng-model="face.select" ng-click="imgSelected(face)" >Add for compare</ion-checkbox>
+      </div>
       <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
 
       <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
