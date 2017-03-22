@@ -7,7 +7,7 @@
       <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
         <div class="item row" ng-repeat="face in img.face" style="overflow-x: scroll;">
           <div class="col center-align" ng-repeat="(name,attr) in face.attributes">
-            {{name}} : {{attr.value}}
+            {{name}} : {{attr.value}}<span ng-if="name == 'smile'">%</span>
           </div>
         </div>
       </ion-scroll>
