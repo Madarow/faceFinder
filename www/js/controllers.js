@@ -117,9 +117,9 @@ angular.module('starter.controllers', [])
       $scope.modalOpts.hide();
       var attr = '';
       for(opt in $scope.opts){
-        attr+=opt+',';
+        if(opt !== 'all')
+          attr+=opt+',';
       }
-
       $scope.sendToApi(attr.substring(0, attr.length-1));
     }
 
@@ -182,13 +182,14 @@ angular.module('starter.controllers', [])
     }
 
     $scope.toogleOpts = function(){
-      $scope.opts = {
-        age:!$scope.opts.age,
-        ethnicity:!$scope.opts.ethnicity  ,
-        gender:!$scope.opts.gender,
-        smiling:!$scope.opts.smiling
-      }
+
+      $scope.opts.age = $scope.opts.all
+      $scope.opts.ethnicity = $scope.opts.all
+      $scope.opts.gender = $scope.opts.all
+      $scope.opts.smiling = $scope.opts.all
+
     }
+
   })
 
 .controller('GaleryCtrl', function($rootScope, $scope, $ionicPopup, $ionicLoading, facePlus) {
