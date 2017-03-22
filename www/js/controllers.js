@@ -245,7 +245,7 @@ angular.module('starter.controllers', [])
             $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'Done !!',
-              template: 'confidence : ' + r.data.confidence
+              template: 'confidence : ' + r.data.confidence + '%'
             });
 
             for (i = 0; i < 2; i++) {
@@ -254,12 +254,13 @@ angular.module('starter.controllers', [])
 
             $scope.comparList.length = 0;
           } else {
-            $ionicLoading.hide();
 
+            $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'An error occured !!',
               template: 'Please try again'
             });
+
           }
         });
 
@@ -331,18 +332,11 @@ angular.module('starter.controllers', [])
       });
       var path;
       for (img in $rootScope.imgs) {
-        path = $rootScope.imgs[img].file.nativeURL
-        /*TODO remove all picture*/
-        ;
+        path = $rootScope.imgs[img].file.nativeURL;
+
         window.resolveLocalFileSystemURL(path, function(fileEntry) {
           fileEntry.remove(function() {
-            $ionicLoading.hide();
-            $ionicPopup.alert({
-              title: 'Done !!',
-              template: 'all pictures removed!'
-            });
-            $rootScope.imgs.length = 0;
-            localStorage.removeItem('imgsList');
+            console.log('ok');
           }, function(error) {
             $ionicPopup.alert({
               title: 'Oops !!',
@@ -356,5 +350,13 @@ angular.module('starter.controllers', [])
           });
         });
       }
+      
+      $ionicLoading.hide();
+      $ionicPopup.alert({
+        title: 'Done !!',
+        template: 'all pictures removed!'
+      });
+      $rootScope.imgs.length = 0;
+      localStorage.removeItem('imgsList');
     }
   })

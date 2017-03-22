@@ -7,12 +7,12 @@
 
     <div ng-show="getNumberOfImages()" class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
       <div class="" ng-repeat="face in img.face">
-        <ion-checkbox class="item" ng-model="face.select" ng-click="imgSelected(face)" >Add for compare</ion-checkbox>
       </div>
-      <img ng-src="{{img.file.nativeURL}}" alt="" class="item" />
+      <img ng-src="{{img.file.nativeURL}}" alt="" class="item" style="max-width:100%"/>
 
       <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
         <div class="item row" ng-repeat="face in img.face" style="overflow-x: scroll;">
+          <ion-checkbox style="border:none;"ng-model="face.select" ng-click="imgSelected(face)"></ion-checkbox>
           <div class="col center-align" ng-repeat="(name,attr) in face.attributes">
             {{name}} : {{attr.value}}<span ng-if="name == 'smile'">%</span>
           </div>
