@@ -55,20 +55,20 @@ angular.module('starter.controllers', [])
     /*picture from gallery*/
     $scope.getImageFromFiles = function() {
 
-      var options = {
-        quality: 75,
-        destinationType: Camera.DestinationType.DATA_URI,
-        allowEdit: true,
-        sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 400,
-        targetHeight: 400,
-        // popoverOptions  : CameraPopoverOptions,
-        saveToPhotoAlbum: false
-      }
+    var options = {
+             quality         : 75,
+             destinationType : Camera.DestinationType.DATA_URI,
+             sourceType      : Camera.PictureSourceType.PHOTOLIBRARY,
+             encodingType    : Camera.EncodingType.JPEG,
+             targetWidth     : 300,
+             targetHeight    : 300,
+             popoverOptions  : CameraPopoverOptions,
+             saveToPhotoAlbum: false,
+             correctOrientation: true
+         };
 
       $rootScope.camera.getPicture(function(r) {
-
+        console.log(r);
         $scope.$apply(function() {
           $scope.mySelfie.nativeURL = r
         })
@@ -87,6 +87,7 @@ angular.module('starter.controllers', [])
     $scope.newPicture = function() {
 
       var options = {
+        allowEdit: true,
         cameraDirection: $rootScope.camera.Direction.FRONT,
         saveToPhotoAlbum: false,
         targetWidth: 400,
@@ -173,7 +174,7 @@ angular.module('starter.controllers', [])
           } else {
 
             var date = new Date;
-
+            console.log($scope.mySelfie);
             var img = {
               file: $scope.mySelfie,
               image_id: repObj.image_id,
@@ -192,6 +193,7 @@ angular.module('starter.controllers', [])
           }
 
         } else {
+          rep = rep.http_status == 413 ? '{"error":"error"}' : rep
           $scope.hide();
           $scope.showAlert(rep)
         }
@@ -222,7 +224,7 @@ angular.module('starter.controllers', [])
 
     $scope.imgs = $rootScope.imgs;
     $scope.comparList = [];
-
+    /*COMPARE PIX*/
     $scope.imgSelected = function(face) {
 
         if(face.select == true){
@@ -350,7 +352,7 @@ angular.module('starter.controllers', [])
           });
         });
       }
-      
+
       $ionicLoading.hide();
       $ionicPopup.alert({
         title: 'Done !!',

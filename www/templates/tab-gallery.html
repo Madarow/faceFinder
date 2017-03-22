@@ -6,8 +6,7 @@
     </div>
 
     <div ng-show="getNumberOfImages()" class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
-      <div class="" ng-repeat="face in img.face">
-      </div>
+
       <img ng-src="{{img.file.nativeURL}}" alt="" class="item" style="max-width:100%"/>
 
       <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
