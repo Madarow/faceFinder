@@ -38,7 +38,7 @@ angular.module('starter.controllers', [])
         $rootScope.imgs = $rootScope.imgs.filter(function(elm){
 
           if(elm.d_day + 3 >= date.getDate()){
-            return elm
+            return elm;
           }else{
             if(!elm.isGalleryImg){
               window.resolveLocalFileSystemURL(elm.file.nativeURL, function(fileEntry) {
@@ -63,7 +63,6 @@ angular.module('starter.controllers', [])
           }
         })
       }
-      console.log($rootScope.imgs);
       $scope.hide();
     });
 
@@ -80,7 +79,7 @@ angular.module('starter.controllers', [])
     $scope.getImageFromFiles = function() {
 
     var options = {
-             quality         : 75,
+             quality         : 60,
              destinationType : Camera.DestinationType.DATA_URI,
              sourceType      : Camera.PictureSourceType.PHOTOLIBRARY,
              encodingType    : Camera.EncodingType.JPEG,
@@ -95,7 +94,7 @@ angular.module('starter.controllers', [])
         $scope.$apply(function() {
           $scope.mySelfie.isGalleryImg = true
           $scope.mySelfie.nativeURL = r
-        })
+        });
 
       }, function(error) {
 
@@ -104,9 +103,9 @@ angular.module('starter.controllers', [])
           template: error
         });
 
-      }, options)
+      }, options);
 
-    }
+    };
 
     /* Take picture from camera */
     $scope.newPicture = function() {
@@ -117,11 +116,11 @@ angular.module('starter.controllers', [])
         targetWidth: 400,
         targetHeight: 400,
         correctOrientation: true,
-        quality: 100
+        quality: 60
       };
 
       $rootScope.camera.getPicture($scope.newPictureSuccess, $scope.newPictureError, options)
-    }
+    };
 
 
     /* Take picture callbacks */
@@ -129,13 +128,13 @@ angular.module('starter.controllers', [])
 
       window.resolveLocalFileSystemURL(picture, function(success) {
         $scope.$apply(function() {
-          $scope.mySelfie = success
+          $scope.mySelfie = success;
         })
 
       }, function(error) {
         $scope.showAlert(error);
       });
-    }
+    };
 
     $scope.newPictureError = function(error) {
       $scope.showAlert(error);
@@ -199,13 +198,13 @@ angular.module('starter.controllers', [])
           } else {
 
             var date = new Date;
-            
+
             var img = {
               file: $scope.mySelfie,
               image_id: repObj.image_id,
               face: repObj.faces,
               d_day: date.getDate()
-            }
+            };
 
             $rootScope.imgs.unshift(img);
             localStorage.removeItem('imgsList');
@@ -220,7 +219,7 @@ angular.module('starter.controllers', [])
         } else {
           rep = rep.http_status == 413 ? '{"error":"error"}' : rep
           $scope.hide();
-          $scope.showAlert(rep)
+          $scope.showAlert(rep);
         }
       })
     }
@@ -254,15 +253,17 @@ angular.module('starter.controllers', [])
     $scope.imgSelected = function(face) {
 
 
-        var elem = angular.element(document.querySelector('#obj-'+face.face_token))
+        var elem = angular.element(document.querySelector('#obj-'+face.face_token));
+
         if(face.select == true){
-          elem.removeClass('displayNone')
+
+          elem.removeClass('displayNone');
           $scope.comparList.push(face);
         }else{
-          elem.addClass('displayNone')
 
+          elem.addClass('displayNone');
           $scope.comparList = $scope.comparList.filter(function(face){
-            return face.face_token !== face.face_token
+            return face.face_token !== face.face_token;
           })
         }
 
@@ -274,8 +275,10 @@ angular.module('starter.controllers', [])
         });
 
         facePlus.doCompar($scope.comparList).then((r) => {
+
+          $ionicLoading.hide();
+
           if (r.status == 200) {
-            $ionicLoading.hide();
 
             $ionicPopup.alert({
               title: 'Done !!',
@@ -284,18 +287,16 @@ angular.module('starter.controllers', [])
 
             for (i = 0; i < 2; i++) {
               $scope.comparList[i].select = false;
-              angular.element(document.querySelector('#obj-'+$scope.comparList[i].face_token)).addClass('displayNone')
+              angular.element(document.querySelector('#obj-'+$scope.comparList[i].face_token)).addClass('displayNone');
             }
 
             $scope.comparList.length = 0;
           } else {
 
-            $ionicLoading.hide();
             $ionicPopup.alert({
               title: 'An error occured !!',
               template: 'Please try again'
             });
-
           }
         });
 
@@ -347,7 +348,6 @@ angular.module('starter.controllers', [])
                     });
                   });
                 });
-
               }
             }
           ]
@@ -386,7 +386,6 @@ angular.module('starter.controllers', [])
             });
           });
         }
-
       }
 
       $ionicLoading.hide();
@@ -394,27 +393,30 @@ angular.module('starter.controllers', [])
         title: 'Done !!',
         template: 'all pictures removed!'
       });
+
       $rootScope.imgs.length = 0;
       localStorage.removeItem('imgsList');
     }
+
   }).directive('myStyle',function(){
     return {
         restrict: 'A',
         link: function ( scope, elem, attrs ) {
-              var letters = '0123456789ABCDEF';
-              var color = '#';
-              for (var i = 0; i < 6; i++ ) {
-                color += letters[Math.floor(Math.random() * 16)];
-              }
 
-              elem.css({
-                width : scope.face.face_rectangle.width+'px',
-                height : scope.face.face_rectangle.height+'px',
-                top : scope.face.face_rectangle.top+'px',
-                left : scope.face.face_rectangle.left+'px',
-                position : 'absolute',
-                border : '2px dashed '+color
-              })
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+          }
+
+          elem.css({
+            width : scope.face.face_rectangle.width+'px',
+            height : scope.face.face_rectangle.height+'px',
+            top : scope.face.face_rectangle.top+'px',
+            left : scope.face.face_rectangle.left+'px',
+            position : 'absolute',
+            border : '2px dashed '+color
+          })
         }
       };
 }).directive('myId',function(){
@@ -424,4 +426,4 @@ angular.module('starter.controllers', [])
               elem.attr('id','obj-'+scope.face.face_token);
         }
       };
-  })
+    })
