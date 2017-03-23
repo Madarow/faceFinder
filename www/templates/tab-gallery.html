@@ -5,13 +5,14 @@
       <p class="no-photo-text">Take a photo or import one</p>
     </div>
 
-    <div ng-show="getNumberOfImages()" class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
+    <p ng-show="getNumberOfImages()" class="center-align">Select two checkboxes to compare these faces</p>
 
-      <img ng-src="{{img.file.nativeURL}}" alt="" class="item" style="max-width:100%"/>
+    <div ng-show="getNumberOfImages()" class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
+      <img ng-src="{{img.file.nativeURL}}" alt="" class="item" style="max-width:100%" />
 
       <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
         <div class="item row" ng-repeat="face in img.face" style="overflow-x: scroll;">
-          <ion-checkbox style="border:none;"ng-model="face.select" ng-click="imgSelected(face)"></ion-checkbox>
+          <ion-checkbox style="border:none;" ng-model="face.select" ng-click="imgSelected(face)"></ion-checkbox>
           <div class="col center-align" ng-repeat="(name,attr) in face.attributes">
             {{name}} : {{attr.value}}<span ng-if="name == 'smile'">%</span>
           </div>

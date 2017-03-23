@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
 
     $rootScope.imgs = [];
 
-    /*send options */
+    /* return_attributes of api options */
     $scope.opts = {
       age: false,
       ethnicity: false,
@@ -14,8 +14,7 @@ angular.module('starter.controllers', [])
       smiling: false,
     };
 
-    /*LOAD */
-
+    /* Loader show and hide methods */
     $scope.show = function() {
       $ionicLoading.show({
         template: 'Loading...'
@@ -27,8 +26,6 @@ angular.module('starter.controllers', [])
     };
 
     $scope.show();
-
-    /*device ready*/
 
     ionic.Platform.ready(function() {
 
@@ -68,7 +65,6 @@ angular.module('starter.controllers', [])
       }
       console.log($rootScope.imgs);
       $scope.hide();
-
     });
 
     /*GET PICTURE*/
@@ -80,7 +76,7 @@ angular.module('starter.controllers', [])
       });
     };
 
-    /*picture from gallery*/
+    /*Get picture from gallery*/
     $scope.getImageFromFiles = function() {
 
     var options = {
@@ -111,7 +107,8 @@ angular.module('starter.controllers', [])
       }, options)
 
     }
-    /*pictures from camera*/
+
+    /* Take picture from camera */
     $scope.newPicture = function() {
 
       var options = {
@@ -126,6 +123,8 @@ angular.module('starter.controllers', [])
       $rootScope.camera.getPicture($scope.newPictureSuccess, $scope.newPictureError, options)
     }
 
+
+    /* Take picture callbacks */
     $scope.newPictureSuccess = function(picture) {
 
       window.resolveLocalFileSystemURL(picture, function(success) {
@@ -142,8 +141,7 @@ angular.module('starter.controllers', [])
       $scope.showAlert(error);
     }
 
-    /*SEND PICTURE*/
-
+    /* return_attributes selection to send picture */
     $scope.setOpts = function() {
 
       $ionicModal.fromTemplateUrl('./templates/option-modal.html', {
@@ -251,7 +249,8 @@ angular.module('starter.controllers', [])
 
     $scope.imgs = $rootScope.imgs;
     $scope.comparList = [];
-    /*COMPARE PIX*/
+
+    /* Compare pictures */
     $scope.imgSelected = function(face) {
 
         if(face.select == true){
@@ -309,7 +308,7 @@ angular.module('starter.controllers', [])
             },
             {
               text: '<b>Yes ! Do it !</b>',
-              type: 'button-positive',
+              type: 'button-assertive',
               onTap: function(e) {
                 $scope.imgs = $scope.imgs.filter(function(elm) {
                   return elm.image_id != img.image_id;
