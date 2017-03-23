@@ -37,8 +37,36 @@ angular.module('starter.controllers', [])
 
       if (localStorage.getItem('imgsList')) {
         $rootScope.imgs = JSON.parse(localStorage.getItem('imgsList'));
-      }
+        var date = new Date;
+        $rootScope.imgs = $rootScope.imgs.filter(function(elm){
 
+          if(elm.d_day + 3 >= date.getDate()){
+            return elm
+          }else{
+            if(!elm.isGalleryImg){
+              window.resolveLocalFileSystemURL(elm.file.nativeURL, function(fileEntry) {
+                fileEntry.remove(function() {
+                  $ionicPopup.alert({
+                    title: 'Old image !!',
+                    template: 'Remove !'
+                  });
+                }, function(error) {
+                  $ionicPopup.alert({
+                    title: 'Ouups !!',
+                    template: error
+                  });
+                }, function() {
+                  $ionicPopup.alert({
+                    title: 'Nope !!',
+                    template: 'No file !'
+                  });
+                });
+              });
+            }
+          }
+        })
+      }
+      console.log($rootScope.imgs);
       $scope.hide();
 
     });
@@ -60,16 +88,16 @@ angular.module('starter.controllers', [])
              destinationType : Camera.DestinationType.DATA_URI,
              sourceType      : Camera.PictureSourceType.PHOTOLIBRARY,
              encodingType    : Camera.EncodingType.JPEG,
-             targetWidth     : 300,
-             targetHeight    : 300,
+             targetWidth     : 400,
+             targetHeight    : 400,
              popoverOptions  : CameraPopoverOptions,
              saveToPhotoAlbum: false,
              correctOrientation: true
          };
 
       $rootScope.camera.getPicture(function(r) {
-        console.log(r);
         $scope.$apply(function() {
+          $scope.mySelfie.isGalleryImg = true
           $scope.mySelfie.nativeURL = r
         })
 
@@ -87,7 +115,6 @@ angular.module('starter.controllers', [])
     $scope.newPicture = function() {
 
       var options = {
-        allowEdit: true,
         cameraDirection: $rootScope.camera.Direction.FRONT,
         saveToPhotoAlbum: false,
         targetWidth: 400,
@@ -336,21 +363,24 @@ angular.module('starter.controllers', [])
       for (img in $rootScope.imgs) {
         path = $rootScope.imgs[img].file.nativeURL;
 
-        window.resolveLocalFileSystemURL(path, function(fileEntry) {
-          fileEntry.remove(function() {
-            console.log('ok');
-          }, function(error) {
-            $ionicPopup.alert({
-              title: 'Oops !!',
-              template: error
-            });
-          }, function() {
-            $ionicPopup.alert({
-              title: 'Oops !!',
-              template: 'file doesn\'t exist (like a spoon) !'
+        if(!img.isGalleryImg){
+          window.resolveLocalFileSystemURL(path, function(fileEntry) {
+            fileEntry.remove(function() {
+              console.log('ok');
+            }, function(error) {
+              $ionicPopup.alert({
+                title: 'Oops !!',
+                template: error
+              });
+            }, function() {
+              $ionicPopup.alert({
+                title: 'Oops !!',
+                template: 'file doesn\'t exist (like a spoon) !'
+              });
             });
           });
-        });
+        }
+
       }
 
       $ionicLoading.hide();
