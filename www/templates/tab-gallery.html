@@ -5,10 +5,12 @@
       <p class="no-photo-text">Take a photo or import one</p>
     </div>
 
-    <p ng-show="getNumberOfImages()" class="center-align">Select two checkboxes to compare these faces</p>
+    <div ng-show="getNumberOfImages()" class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;position:relative">
 
-    <div ng-show="getNumberOfImages()" class="card border-radius" ng-repeat="img in imgs track by img.image_id" style="overflow-x: scroll;">
-      <img ng-src="{{img.file.nativeURL}}" alt="" class="item" style="max-width:100%" />
+      <div class="containImg">
+        <img ng-src="{{img.file.nativeURL}}" class="item" style="max-width:100%"/>
+        <div class="faceBorder displayNone" my-id ng-repeat="face in img.face" my-style style="z-index:99999;"></div>
+      </div>
 
       <ion-scroll direction="x" class="wide-as-needed item" style="overflow-x: scroll;">
         <div class="item row" ng-repeat="face in img.face" style="overflow-x: scroll;">

@@ -57,3 +57,7 @@
 .center-align {
   text-align: center;
 }
+
+.displayNone{
+  display: none;
+}

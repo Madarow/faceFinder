@@ -199,7 +199,7 @@ angular.module('starter.controllers', [])
           } else {
 
             var date = new Date;
-            console.log($scope.mySelfie);
+            
             var img = {
               file: $scope.mySelfie,
               image_id: repObj.image_id,
@@ -253,9 +253,14 @@ angular.module('starter.controllers', [])
     /* Compare pictures */
     $scope.imgSelected = function(face) {
 
+
+        var elem = angular.element(document.querySelector('#obj-'+face.face_token))
         if(face.select == true){
+          elem.removeClass('displayNone')
           $scope.comparList.push(face);
         }else{
+          elem.addClass('displayNone')
+
           $scope.comparList = $scope.comparList.filter(function(face){
             return face.face_token !== face.face_token
           })
@@ -271,13 +276,15 @@ angular.module('starter.controllers', [])
         facePlus.doCompar($scope.comparList).then((r) => {
           if (r.status == 200) {
             $ionicLoading.hide();
+
             $ionicPopup.alert({
               title: 'Done !!',
               template: 'confidence : ' + r.data.confidence + '%'
             });
 
             for (i = 0; i < 2; i++) {
-              $scope.comparList[i].select = false
+              $scope.comparList[i].select = false;
+              angular.element(document.querySelector('#obj-'+$scope.comparList[i].face_token)).addClass('displayNone')
             }
 
             $scope.comparList.length = 0;
@@ -390,4 +397,31 @@ angular.module('starter.controllers', [])
       $rootScope.imgs.length = 0;
       localStorage.removeItem('imgsList');
     }
+  }).directive('myStyle',function(){
+    return {
+        restrict: 'A',
+        link: function ( scope, elem, attrs ) {
+              var letters = '0123456789ABCDEF';
+              var color = '#';
+              for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+              }
+
+              elem.css({
+                width : scope.face.face_rectangle.width+'px',
+                height : scope.face.face_rectangle.height+'px',
+                top : scope.face.face_rectangle.top+'px',
+                left : scope.face.face_rectangle.left+'px',
+                position : 'absolute',
+                border : '2px dashed '+color
+              })
+        }
+      };
+}).directive('myId',function(){
+    return {
+        restrict: 'A',
+        link: function ( scope, elem, attrs ) {
+              elem.attr('id','obj-'+scope.face.face_token);
+        }
+      };
   })
