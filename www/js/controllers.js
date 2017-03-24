@@ -35,8 +35,9 @@ angular.module('starter.controllers', [])
       if (localStorage.getItem('imgsList')) {
         $rootScope.imgs = JSON.parse(localStorage.getItem('imgsList'));
         var date = new Date;
-        $rootScope.imgs = $rootScope.imgs.filter(function(elm){
 
+        /*face_token have 72hours lives*/
+        $rootScope.imgs = $rootScope.imgs.filter(function(elm){
           if(elm.d_day + 3 >= date.getDate()){
             return elm;
           }else{
@@ -79,7 +80,7 @@ angular.module('starter.controllers', [])
     $scope.getImageFromFiles = function() {
 
     var options = {
-             quality         : 60,
+             quality         : 50,
              destinationType : Camera.DestinationType.DATA_URI,
              sourceType      : Camera.PictureSourceType.PHOTOLIBRARY,
              encodingType    : Camera.EncodingType.JPEG,
@@ -116,7 +117,7 @@ angular.module('starter.controllers', [])
         targetWidth: 400,
         targetHeight: 400,
         correctOrientation: true,
-        quality: 60
+        quality: 50
       };
 
       $rootScope.camera.getPicture($scope.newPictureSuccess, $scope.newPictureError, options)
@@ -267,7 +268,6 @@ angular.module('starter.controllers', [])
           })
         }
 
-
       if ($scope.comparList.length == 2) {
 
         $ionicLoading.show({
@@ -365,10 +365,12 @@ angular.module('starter.controllers', [])
       $ionicLoading.show({
         template: 'Removing...'
       });
+
       var path;
       for (img in $rootScope.imgs) {
         path = $rootScope.imgs[img].file.nativeURL;
 
+        /*if img come from gallery don't remove */
         if(!img.isGalleryImg){
           window.resolveLocalFileSystemURL(path, function(fileEntry) {
             fileEntry.remove(function() {
@@ -381,7 +383,7 @@ angular.module('starter.controllers', [])
             }, function() {
               $ionicPopup.alert({
                 title: 'Oops !!',
-                template: 'file doesn\'t exist (like a spoon) !'
+                template: 'file doesn\'t exist !'
               });
             });
           });
@@ -403,6 +405,7 @@ angular.module('starter.controllers', [])
         restrict: 'A',
         link: function ( scope, elem, attrs ) {
 
+          /*ramdom color for face rectangle*/
           var letters = '0123456789ABCDEF';
           var color = '#';
           for (var i = 0; i < 6; i++ ) {
@@ -419,11 +422,12 @@ angular.module('starter.controllers', [])
           })
         }
       };
-}).directive('myId',function(){
-    return {
-        restrict: 'A',
-        link: function ( scope, elem, attrs ) {
-              elem.attr('id','obj-'+scope.face.face_token);
-        }
-      };
+    }).directive('myId',function(){
+        return {
+            restrict: 'A',
+            link: function ( scope, elem, attrs ) {
+              /*make id for face retangle*/
+                  elem.attr('id','obj-'+scope.face.face_token);
+            }
+          };
     })
