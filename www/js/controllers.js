@@ -69,13 +69,6 @@ angular.module('starter.controllers', [])
 
     /*GET PICTURE*/
 
-    $scope.showAlert = function() {
-      var alertPopup = $ionicPopup.alert({
-        title: 'Ooups !!',
-        template: error
-      });
-    };
-
     /*Get picture from gallery*/
     $scope.getImageFromFiles = function() {
 
@@ -129,16 +122,21 @@ angular.module('starter.controllers', [])
 
       window.resolveLocalFileSystemURL(picture, function(success) {
         $scope.$apply(function() {
-          $scope.mySelfie = success;
-        })
-
-      }, function(error) {
-        $scope.showAlert(error);
-      });
+            $scope.mySelfie = success;
+          })
+        }, function(error) {
+          $ionicPopup.alert({
+            title: 'Ooups !!',
+            template: error
+          });
+        });
     };
 
     $scope.newPictureError = function(error) {
-      $scope.showAlert(error);
+      $ionicPopup.alert({
+        title: 'Ooups !!',
+        template: error
+      });
     }
 
     /* return_attributes selection to send picture */
@@ -220,7 +218,10 @@ angular.module('starter.controllers', [])
         } else {
           rep = rep.http_status == 413 ? '{"error":"error"}' : rep
           $scope.hide();
-          $scope.showAlert(rep);
+          $ionicPopup.alert({
+            title: 'Ooups !!',
+            template: rep
+          });
         }
       })
     }
